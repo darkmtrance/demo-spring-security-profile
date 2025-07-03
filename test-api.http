@@ -1,0 +1,239 @@
+# Test API - Demo Spring Security Profile
+# REST Client compatible file for testing all endpoints
+# Use with VS Code REST Client extension or similar tools
+
+@baseUrl = http://localhost:8080/api
+@contentType = application/json
+
+### Variables for test data
+@testEmail = john2@example.com
+@testPassword = password123
+@testName = John Doe
+@duplicateEmail = john@example.com
+@wrongPassword = wrongpassword
+
+###############################################################################
+# 1. SIGNUP TESTS
+###############################################################################
+
+### 1.1 Register a new user (SUCCESS)
+POST {{baseUrl}}/auth/signup
+Content-Type: {{contentType}}
+
+{
+  "name": "{{testName}}",
+  "email": "{{testEmail}}",
+  "password": "{{testPassword}}"
+}
+
+### 1.2 Try to register with same email (SHOULD FAIL - Duplicate email)
+POST {{baseUrl}}/auth/signup
+Content-Type: {{contentType}}
+
+{
+  "name": "Jane Doe",
+  "email": "{{duplicateEmail}}",
+  "password": "password456"
+}
+
+### 1.3 Try to register with invalid email format (SHOULD FAIL)
+POST {{baseUrl}}/auth/signup
+Content-Type: {{contentType}}
+
+{
+  "name": "Invalid User",
+  "email": "invalid-email",
+  "password": "password123"
+}
+
+### 1.4 Try to register with empty fields (SHOULD FAIL)
+POST {{baseUrl}}/auth/signup
+Content-Type: {{contentType}}
+
+{
+  "name": "",
+  "email": "",
+  "password": ""
+}
+
+###############################################################################
+# 2. LOGIN TESTS
+###############################################################################
+
+### 2.1 Login with valid credentials (SUCCESS)
+# @name loginRequest
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "{{testEmail}}",
+  "password": "{{testPassword}}"
+}
+
+### 2.2 Try to login with wrong password (SHOULD FAIL)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "{{testEmail}}",
+  "password": "{{wrongPassword}}"
+}
+
+### 2.3 Try to login with non-existent email (SHOULD FAIL)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "nonexistent@example.com",
+  "password": "{{testPassword}}"
+}
+
+### 2.4 Try to login with empty credentials (SHOULD FAIL)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "",
+  "password": ""
+}
+
+###############################################################################
+# 3. PROTECTED ENDPOINT TESTS (Requires valid JWT token)
+# Note: Execute login request above first to get the token
+# Then copy the token from the response and paste it in the Authorization header
+###############################################################################
+
+### 3.1 Access protected hello endpoint without token (SHOULD FAIL - 401 Unauthorized)
+GET {{baseUrl}}/protected/hello
+
+### 3.2 Access protected hello endpoint with valid token (SUCCESS)
+# Replace YOUR_JWT_TOKEN_HERE with actual token from login response
+GET {{baseUrl}}/protected/hello
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxNTc5NjkxLCJleHAiOjE3NTE2NjYwOTF9.TW5gTOI5u16Ry7I0yUX0oEFb9bBH7H9xzstgJK_i2wc
+
+### 3.3 Access protected profile endpoint with valid token (SUCCESS)
+# Replace YOUR_JWT_TOKEN_HERE with actual token from login response
+GET {{baseUrl}}/protected/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxNTc5NjkxLCJleHAiOjE3NTE2NjYwOTF9.TW5gTOI5u16Ry7I0yUX0oEFb9bBH7H9xzstgJK_i2wc
+
+### 3.4 Access protected user endpoint with valid token (SUCCESS)
+# Replace YOUR_JWT_TOKEN_HERE with actual token from login response
+GET {{baseUrl}}/protected/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxNTc0MjU1LCJleHAiOjE3NTE2NjA2NTV9.DvuGY9QRegi_J5CvSddktNfgctC495pmP1LbyGgj2-8
+
+### 3.5 Access protected admin endpoint with valid token (SUCCESS)
+# Replace YOUR_JWT_TOKEN_HERE with actual token from login response
+GET {{baseUrl}}/protected/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxNTc0MjU1LCJleHAiOjE3NTE2NjA2NTV9.DvuGY9QRegi_J5CvSddktNfgctC495pmP1LbyGgj2-8
+
+### 3.6 Try to access protected endpoint with invalid token (SHOULD FAIL - 401 Unauthorized)
+GET {{baseUrl}}/protected/hello
+Authorization: Bearer invalid.jwt.token
+
+### 3.7 Try to access protected endpoint with expired token (SHOULD FAIL - 401 Unauthorized)
+GET {{baseUrl}}/protected/hello
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+###############################################################################
+# 4. EDGE CASE TESTS
+###############################################################################
+
+### 4.1 Try to access non-existent endpoint (SHOULD FAIL - 404 Not Found)
+GET {{baseUrl}}/nonexistent
+
+### 4.2 Try POST on GET-only endpoint (SHOULD FAIL - 405 Method Not Allowed)
+POST {{baseUrl}}/protected/hello
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 4.3 Try GET on POST-only endpoint (SHOULD FAIL - 405 Method Not Allowed)
+GET {{baseUrl}}/auth/login
+
+### 4.4 Send malformed JSON (SHOULD FAIL - 400 Bad Request)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "test@example.com"
+  "password": "missing comma above"
+}
+
+###############################################################################
+# 5. STRESS TESTS (Optional - Multiple requests)
+###############################################################################
+
+### 5.1 Multiple login attempts with same credentials
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "{{testEmail}}",
+  "password": "{{testPassword}}"
+}
+
+### 5.2 Multiple protected endpoint calls
+# Replace YOUR_JWT_TOKEN_HERE with actual token from login response
+GET {{baseUrl}}/protected/hello
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+###############################################################################
+# 6. HEALTH CHECK AND MONITORING (If available)
+###############################################################################
+
+### 6.1 Health check endpoint
+GET http://localhost:8080/actuator/health
+
+### 6.2 Application info endpoint
+GET http://localhost:8080/actuator/info
+
+###############################################################################
+# 7. DATABASE CONSOLE ACCESS (Development only - H2)
+###############################################################################
+
+### 7.1 H2 Console (Development profile only)
+# Open in browser: http://localhost:8080/h2-console
+# JDBC URL: jdbc:h2:mem:testdb
+# Username: sa
+# Password: (empty)
+
+###############################################################################
+# NOTES FOR TESTING:
+###############################################################################
+
+# 1. Make sure the application is running on localhost:8080
+# 2. Start with signup to create a user
+# 3. Then login to get a JWT token
+# 4. Copy the token from login response
+# 5. Replace "YOUR_JWT_TOKEN_HERE" with the actual token in protected endpoint tests
+# 6. Execute tests in logical order for best results
+
+# Expected Response Codes:
+# - 200 OK: Successful login, successful access to protected endpoints
+# - 201 Created: Successful user registration
+# - 400 Bad Request: Invalid input data, malformed JSON
+# - 401 Unauthorized: Missing or invalid JWT token, wrong credentials
+# - 404 Not Found: Non-existent endpoints
+# - 405 Method Not Allowed: Wrong HTTP method
+# - 409 Conflict: Duplicate email registration
+
+# Token Structure:
+# Header: {"alg":"HS256","typ":"JWT"}
+# Payload: {"sub":"user@example.com","iat":timestamp,"exp":timestamp}
+# Signature: HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret)
+
+###############################################################################
+# AUTOMATED TESTING WORKFLOW:
+###############################################################################
+
+# 1. Run signup test (1.1)
+# 2. Run login test (2.1) and copy the token
+# 3. Update all "YOUR_JWT_TOKEN_HERE" with the real token
+# 4. Run all protected endpoint tests (3.2-3.5)
+# 5. Run error case tests to verify security
+# 6. Verify all responses match expected behavior
+
+# For VS Code REST Client extension:
+# - Install "REST Client" extension by Huachao Mao
+# - Open this file in VS Code
+# - Click "Send Request" above each ### request
+# - View responses in the right panel
+# - Use Ctrl+Shift+P -> "Rest Client: Send Request" for keyboard shortcut

@@ -2,11 +2,8 @@ package com.example.demospringboot.repository;
 
 import com.example.demospringboot.model.User;
 import org.springframework.jdbc.core.simple.JdbcClient;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -49,28 +46,32 @@ public class UserRepository {
     }
     
     private User insert(User user) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        
-        jdbcClient
-                .sql("INSERT INTO users (name, email, password) VALUES (?, ?, ?)")
-                .param(user.name())
-                .param(user.email())
-                .param(user.password())
-                .update(keyHolder);
-        
-        if (keyHolder.getKey() == null) {
-            throw new RuntimeException("Failed to get generated key");
+        // Use a simpler approach with RETURNING clause if supported, otherwise use a sequence query
+        try {
+            // First, insert the user and get the generated ID using a different approach
+            jdbcClient
+                    .sql("INSERT INTO users (name, email, password) VALUES (?, ?, ?)")
+                    .param(user.name())
+                    .param(user.email())
+                    .param(user.password())
+                    .update();
+            
+            // Get the user back by email (since email is unique)
+            return jdbcClient
+                    .sql("SELECT id, name, email, password, created_at FROM users WHERE email = ?")
+                    .param(user.email())
+                    .query((rs, rowNum) -> new User(
+                            rs.getLong("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password"),
+                            rs.getTimestamp("created_at").toLocalDateTime()
+                    ))
+                    .single();
+                    
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to insert user: " + e.getMessage(), e);
         }
-        Long id = keyHolder.getKey().longValue();
-        
-        // Get the created_at timestamp
-        LocalDateTime createdAt = jdbcClient
-                .sql("SELECT created_at FROM users WHERE id = ?")
-                .param(id)
-                .query((rs, rowNum) -> rs.getTimestamp("created_at").toLocalDateTime())
-                .single();
-        
-        return user.withId(id).withCreatedAt(createdAt);
     }
     
     private User update(User user) {

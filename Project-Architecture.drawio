@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2025-07-03T10:45:00.000Z" agent="5.0" etag="XYZ789" version="21.6.5" type="device">
+  <diagram name="Project Architecture" id="project-architecture">
+    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="Arquitectura Completa del Proyecto - Spring Boot JWT Security Demo" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1f497d;" vertex="1" parent="1">
+          <mxGeometry x="350" y="10" width="700" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- External Layer (Clients) -->
+        <mxCell id="clientLayer" value="CAPA CLIENTE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="50" y="70" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="webClient" value="🌐 Cliente Web&#xa;(Browser/SPA)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="70" y="100" width="80" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="mobileClient" value="📱 App Móvil&#xa;(iOS/Android)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="160" y="100" width="80" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="apiClient" value="🔧 Cliente API&#xa;(Postman/cURL)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="115" y="160" width="80" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- Spring Boot Application Layer -->
+        <mxCell id="springBootLayer" value="APLICACIÓN SPRING BOOT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="320" y="70" width="760" height="620" as="geometry" />
+        </mxCell>
+        
+        <!-- Security Layer -->
+        <mxCell id="securityLayer" value="CAPA DE SEGURIDAD (Spring Security)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="340" y="100" width="720" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="securityConfig" value="SecurityConfig&#xa;• CSRF disabled&#xa;• CORS config&#xa;• Stateless sessions&#xa;• JWT filter chain" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="360" y="130" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="jwtAuthFilter" value="JwtAuthFilter&#xa;• Intercepta requests&#xa;• Valida JWT token&#xa;• Establece contexto&#xa;• Before auth filter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="500" y="130" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="userDetailsService" value="UserDetailsServiceImpl&#xa;• Implementa UserDetailsService&#xa;• Carga user por email&#xa;• Convierte a UserDetails" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="640" y="130" width="140" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="jwtHelper" value="JwtHelper&#xa;• Genera tokens&#xa;• Valida tokens&#xa;• Extrae claims&#xa;• Maneja expiración" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="800" y="130" width="120" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- Controller Layer -->
+        <mxCell id="controllerLayer" value="CAPA DE CONTROLADORES (REST API)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="340" y="240" width="720" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="authController" value="AuthController&#xa;/api/auth/*&#xa;• POST /login&#xa;• POST /signup&#xa;• Maneja autenticación" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="140" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="protectedController" value="ProtectedController&#xa;/api/protected/*&#xa;• GET /hello&#xa;• GET /user&#xa;• Recursos protegidos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="520" y="270" width="140" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="globalExceptionHandler" value="@ControllerAdvice&#xa;GlobalExceptionHandler&#xa;• Manejo centralizado&#xa;• Respuestas consistentes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="680" y="270" width="140" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- DTO Layer -->
+        <mxCell id="dtoLayer" value="CAPA DE TRANSFERENCIA DE DATOS (DTOs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="340" y="360" width="720" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="loginRequest" value="LoginRequest&#xa;(Java Record)&#xa;• email&#xa;• password" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#808080;" vertex="1" parent="1">
+          <mxGeometry x="360" y="390" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="signupRequest" value="SignupRequest&#xa;(Java Record)&#xa;• name, email&#xa;• password" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#808080;" vertex="1" parent="1">
+          <mxGeometry x="480" y="390" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="loginResponse" value="LoginResponse&#xa;(Java Record)&#xa;• token, email&#xa;• name" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#808080;" vertex="1" parent="1">
+          <mxGeometry x="600" y="390" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="apiResponse" value="ApiResponse&lt;T&gt;&#xa;(Generic Record)&#xa;• success, message&#xa;• data, timestamp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#808080;" vertex="1" parent="1">
+          <mxGeometry x="720" y="390" width="110" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Service Layer -->
+        <mxCell id="serviceLayer" value="CAPA DE SERVICIOS (Lógica de Negocio)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="340" y="460" width="720" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="userService" value="UserService&#xa;• Registro de usuarios&#xa;• Validación de credenciales&#xa;• Encriptación de passwords&#xa;• Lógica de negocio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#808080;" vertex="1" parent="1">
+          <mxGeometry x="360" y="490" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="passwordEncoder" value="PasswordEncoder&#xa;(BCrypt)&#xa;• Hash passwords&#xa;• Verificación segura" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#808080;" vertex="1" parent="1">
+          <mxGeometry x="540" y="490" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="validationService" value="Validation&#xa;• Bean Validation&#xa;• Custom validators&#xa;• Business rules" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#808080;" vertex="1" parent="1">
+          <mxGeometry x="680" y="490" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Repository Layer -->
+        <mxCell id="repositoryLayer" value="CAPA DE ACCESO A DATOS (Repository)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="340" y="580" width="720" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="userRepository" value="UserRepository&#xa;• JdbcClient implementation&#xa;• findByEmail()&#xa;• save() user&#xa;• Custom SQL queries" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#4caf50;" vertex="1" parent="1">
+          <mxGeometry x="360" y="610" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="jdbcClient" value="JdbcClient&#xa;(Spring 6.1+)&#xa;• Modern JDBC API&#xa;• Functional queries&#xa;• Type-safe mapping" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#4caf50;" vertex="1" parent="1">
+          <mxGeometry x="540" y="610" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="transactionManager" value="@Transactional&#xa;Transaction Manager&#xa;• ACID properties&#xa;• Rollback support" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#4caf50;" vertex="1" parent="1">
+          <mxGeometry x="680" y="610" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Model Layer -->
+        <mxCell id="modelLayer" value="CAPA DE MODELO (Entidades)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="340" y="700" width="350" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="userModel" value="User (Java Record)&#xa;• id, name, email&#xa;• password, createdAt&#xa;• Immutable entity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#ffc107;" vertex="1" parent="1">
+          <mxGeometry x="360" y="730" width="150" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="userDetails" value="UserPrincipal&#xa;implements UserDetails&#xa;• Spring Security integration&#xa;• Authorities & roles" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#ffc107;" vertex="1" parent="1">
+          <mxGeometry x="530" y="730" width="150" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Database Layer -->
+        <mxCell id="databaseLayer" value="CAPA DE BASE DE DATOS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="720" y="700" width="340" height="180" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="h2Database" value="💾 H2 Database&#xa;(Perfil DEV)&#xa;• In-memory&#xa;• Console web&#xa;• Auto-DDL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e8f5e8;strokeColor=#4caf50;" vertex="1" parent="1">
+          <mxGeometry x="740" y="730" width="80" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="postgresDatabase" value="🐘 PostgreSQL&#xa;(Perfil PROD)&#xa;• Production DB&#xa;• Docker compose&#xa;• Persistent data" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e8f5e8;strokeColor=#4caf50;" vertex="1" parent="1">
+          <mxGeometry x="840" y="730" width="80" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="liquibase" value="📋 Liquibase&#xa;• Database migration&#xa;• Version control&#xa;• Changelog XML&#xa;• Profile-specific" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#4caf50;" vertex="1" parent="1">
+          <mxGeometry x="940" y="730" width="100" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="dockerCompose" value="🐳 Docker Compose&#xa;• PostgreSQL service&#xa;• Environment setup&#xa;• Local development" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#0066cc;" vertex="1" parent="1">
+          <mxGeometry x="740" y="820" width="120" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- Configuration Layer -->
+        <mxCell id="configLayer" value="CONFIGURACIÓN Y PERFILES" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="70" width="250" height="620" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="applicationProperties" value="application.properties&#xa;• Configuración base&#xa;• Perfiles activos&#xa;• Logging levels&#xa;• Common settings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0f0;strokeColor=#ff6b6b;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="100" width="130" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="devProperties" value="application-dev.properties&#xa;• H2 database&#xa;• Debug logging&#xa;• Hot reload&#xa;• Development tools" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0f0;strokeColor=#ff6b6b;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="180" width="130" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="prodProperties" value="application-prod.properties&#xa;• PostgreSQL config&#xa;• Production logging&#xa;• Security hardening&#xa;• Performance tuning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0f0;strokeColor=#ff6b6b;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="260" width="130" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="jwtConfig" value="JWT Configuration&#xa;• Secret key&#xa;• Expiration time&#xa;• Issuer&#xa;• Algorithm (HS256)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0f0;strokeColor=#ff6b6b;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="340" width="130" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="corsConfig" value="CORS Configuration&#xa;• Allowed origins&#xa;• Allowed methods&#xa;• Credentials support&#xa;• Headers mapping" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0f0;strokeColor=#ff6b6b;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="420" width="130" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="actuator" value="Spring Actuator&#xa;• Health checks&#xa;• Metrics&#xa;• Environment info&#xa;• Monitoring" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0f0;strokeColor=#ff6b6b;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="500" width="130" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- Testing Layer -->
+        <mxCell id="testingLayer" value="TESTING Y AUTOMATIZACIÓN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="50" y="720" width="250" height="160" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="powershellScript" value="test-endpoints.ps1&#xa;• PowerShell automation&#xa;• Windows compatible&#xa;• API testing&#xa;• JSON validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0ff;strokeColor=#6666ff;" vertex="1" parent="1">
+          <mxGeometry x="70" y="750" width="100" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="bashScript" value="test-endpoints.sh&#xa;• Bash automation&#xa;• Linux/macOS&#xa;• cURL commands&#xa;• Cross-platform" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0ff;strokeColor=#6666ff;" vertex="1" parent="1">
+          <mxGeometry x="180" y="750" width="100" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="junit" value="JUnit Tests&#xa;• Unit testing&#xa;• Integration tests&#xa;• Mock objects&#xa;• Test coverage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0ff;strokeColor=#6666ff;" vertex="1" parent="1">
+          <mxGeometry x="125" y="820" width="100" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- Documentation -->
+        <mxCell id="docsLayer" value="DOCUMENTACIÓN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="320" y="900" width="760" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="readme" value="README.md&#xa;• Project overview&#xa;• Setup instructions&#xa;• API documentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffacd;strokeColor=#ddd700;" vertex="1" parent="1">
+          <mxGeometry x="340" y="930" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="testing" value="TESTING.md&#xa;• Test scenarios&#xa;• Script usage&#xa;• Validation steps" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffacd;strokeColor=#ddd700;" vertex="1" parent="1">
+          <mxGeometry x="480" y="930" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="guide" value="GUIA-EXPLICACION.md&#xa;• Architecture guide&#xa;• Code explanation&#xa;• Best practices" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffacd;strokeColor=#ddd700;" vertex="1" parent="1">
+          <mxGeometry x="620" y="930" width="140" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="diagrams" value="Diagramas DrawIO&#xa;• JWT flow&#xa;• Architecture&#xa;• Visual guides" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffacd;strokeColor=#ddd700;" vertex="1" parent="1">
+          <mxGeometry x="780" y="930" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Main Flow Arrows -->
+        <mxCell id="clientToSecurity" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=3;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" edge="1" parent="1" source="clientLayer" target="securityLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="securityToController" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="securityLayer" target="controllerLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="controllerToService" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="controllerLayer" target="serviceLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="serviceToRepository" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="serviceLayer" target="repositoryLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="repositoryToModel" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="repositoryLayer" target="modelLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="modelToDatabase" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;endArrow=classic;endFill=1;" edge="1" parent="1" source="modelLayer" target="databaseLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Configuration Connections -->
+        <mxCell id="configToSecurity" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ff9900;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" edge="1" parent="1" source="configLayer" target="securityLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="configToDatabase" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ff9900;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" edge="1" parent="1" source="configLayer" target="databaseLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Testing Connections -->
+        <mxCell id="testingToController" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#009900;strokeWidth=2;endArrow=classic;endFill=1;dashed=1;" edge="1" parent="1" source="testingLayer" target="controllerLayer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Architecture Notes -->
+        <mxCell id="architectureNotes" value="🏗️ PATRONES ARQUITECTÓNICOS:&#xa;&#xa;📋 CAPAS (Layered Architecture):&#xa;• Separación clara de responsabilidades&#xa;• Controller → Service → Repository → Database&#xa;• Cada capa comunica solo con la siguiente&#xa;&#xa;🔒 SEGURIDAD (Security-First):&#xa;• JWT stateless authentication&#xa;• Spring Security filter chain&#xa;• Password encryption (BCrypt)&#xa;• CORS configuration&#xa;&#xa;📦 DEPENDENCY INJECTION:&#xa;• Spring IoC container&#xa;• @Autowired dependencies&#xa;• Configuration beans&#xa;&#xa;🔧 PROFILES (Environment-specific):&#xa;• DEV: H2 in-memory, debug logging&#xa;• PROD: PostgreSQL, optimized settings&#xa;&#xa;📋 DATABASE MIGRATION:&#xa;• Liquibase changelog system&#xa;• Version-controlled schema&#xa;• Rollback capabilities&#xa;&#xa;🧪 TESTING STRATEGY:&#xa;• Automated API testing&#xa;• Cross-platform scripts&#xa;• Integration testing&#xa;&#xa;📚 JAVA 17 FEATURES:&#xa;• Records for DTOs&#xa;• Text blocks&#xa;• Pattern matching&#xa;• Modern Spring Boot 3.x" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="220" width="250" height="480" as="geometry" />
+        </mxCell>
+        
+        <!-- Technology Stack -->
+        <mxCell id="techStack" value="🛠️ STACK TECNOLÓGICO:&#xa;&#xa;☕ Backend:&#xa;• Java 17 (LTS)&#xa;• Spring Boot 3.2+&#xa;• Spring Security 6&#xa;• Spring Web MVC&#xa;• Spring Data JDBC&#xa;&#xa;🔐 Security:&#xa;• JWT (JSON Web Tokens)&#xa;• BCrypt password hashing&#xa;• CORS support&#xa;&#xa;💾 Database:&#xa;• H2 (development)&#xa;• PostgreSQL (production)&#xa;• Liquibase migrations&#xa;&#xa;🔧 Tools:&#xa;• Maven build system&#xa;• Docker Compose&#xa;• JdbcClient (Spring 6.1+)&#xa;&#xa;🧪 Testing:&#xa;• PowerShell scripts&#xa;• Bash scripts&#xa;• cURL automation&#xa;&#xa;📋 Documentation:&#xa;• Markdown files&#xa;• DrawIO diagrams&#xa;• Code comments" style="text;html=1;strokeColor=#666666;fillColor=#f0f8ff;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="580" width="210" height="300" as="geometry" />
+        </mxCell>
+        
+        <!-- Data Flow Legend -->
+        <mxCell id="dataFlowLegend" value="📊 FLUJO DE DATOS:&#xa;&#xa;➡️ Request Flow (azul):&#xa;Cliente → Seguridad → Controller → Service → Repository → DB&#xa;&#xa;⬅️ Response Flow:&#xa;DB → Repository → Service → Controller → Seguridad → Cliente&#xa;&#xa;⚙️ Configuration (naranja):&#xa;Properties files → Components&#xa;&#xa;🧪 Testing (verde):&#xa;Scripts → API endpoints&#xa;&#xa;📋 Components:&#xa;🟪 Controllers (púrpura)&#xa;🟨 Services (amarillo)&#xa;🟩 Repository/DB (verde)&#xa;🟧 Security (naranja)&#xa;🔵 Configuration (azul)" style="text;html=1;strokeColor=#333333;fillColor=#ffffcc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="320" y="790" width="370" height="100" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

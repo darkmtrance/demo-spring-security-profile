@@ -265,3 +265,62 @@ chmod +x test-endpoints.sh
 - **Duración Token**: 24 horas por defecto
 - **Base de datos**: Se recrea en cada reinicio en modo `dev`
 - **Logs**: Configurables por perfil para diferentes niveles de detalle
+
+# Testing Guide
+
+Este documento describe las diferentes formas de probar la aplicación Demo Spring Security Profile.
+
+## 🧪 Métodos de Testing Disponibles
+
+### 1. REST Client Testing (Recomendado) 📄
+
+**Archivo**: `test-api.http`
+
+Este es el método más completo y fácil de usar para testing interactivo.
+
+#### Instalación y Uso:
+
+1. **VS Code con REST Client Extension**:
+   ```bash
+   # Instalar la extensión "REST Client" por Huachao Mao
+   # O buscar "REST Client" en VS Code Extensions
+   ```
+
+2. **Abrir el archivo de testing**:
+   - Abre `test-api.http` en VS Code
+   - Verás todos los endpoints organizados por categorías
+
+3. **Ejecutar pruebas**:
+   - Haz clic en "Send Request" arriba de cada request
+   - O usa `Ctrl+Shift+P` → "Rest Client: Send Request"
+
+#### Flujo de Testing Recomendado:
+
+```http
+# 1. Ejecutar signup (crear usuario)
+POST {{baseUrl}}/auth/signup
+
+# 2. Ejecutar login (obtener token)
+POST {{baseUrl}}/auth/login
+
+# 3. Copiar el token del response
+
+# 4. Reemplazar "YOUR_JWT_TOKEN_HERE" con el token real
+
+# 5. Ejecutar tests de endpoints protegidos
+GET {{baseUrl}}/protected/hello
+Authorization: Bearer [tu-token-aqui]
+```
+
+#### Ventajas del REST Client:
+- ✅ Testing interactivo visual
+- ✅ Variables reutilizables
+- ✅ Historial de requests
+- ✅ Syntax highlighting
+- ✅ Response formatting automático
+- ✅ Fácil copia/pega de tokens
+- ✅ No requiere herramientas externas
+
+### 2. Scripts Automatizados 🤖
+
+...existing code...

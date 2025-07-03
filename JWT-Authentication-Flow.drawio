@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2025-07-03T10:30:00.000Z" agent="5.0" etag="ABC123" version="21.6.5" type="device">
+  <diagram name="JWT Authentication Flow" id="jwt-auth-flow">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="Flujo de Autenticación JWT - Spring Security Demo" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1f497d;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="370" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Actors -->
+        <mxCell id="user" value="👤&#xa;Usuario/Cliente" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="30" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Controllers -->
+        <mxCell id="authController" value="AuthController&#xa;/api/auth/*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="100" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="protectedController" value="ProtectedController&#xa;/api/protected/*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Services -->
+        <mxCell id="userService" value="UserService" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="100" width="100" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="jwtHelper" value="JwtHelper" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="200" width="100" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Security Components -->
+        <mxCell id="jwtAuthFilter" value="JwtAuthFilter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="securityContext" value="SecurityContext" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Database -->
+        <mxCell id="database" value="💾&#xa;Base de Datos&#xa;(H2/PostgreSQL)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="600" y="90" width="80" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Phase 1: Login Flow -->
+        <mxCell id="phase1Label" value="FASE 1: LOGIN Y GENERACIÓN DE JWT" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="60" width="280" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 1: Login Request -->
+        <mxCell id="step1" value="1. POST /api/auth/login&#xa;{email, password}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;fontColor=#0066cc;fontStyle=1;" edge="1" parent="1" source="user" target="authController">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="110" as="sourcePoint" />
+            <mxPoint x="170" y="140" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="170" y="130" />
+              <mxPoint x="170" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Step 2: Validate User -->
+        <mxCell id="step2" value="2. Validar credenciales" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;fontColor=#0066cc;fontStyle=1;" edge="1" parent="1" source="authController" target="userService">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 3: Database Query -->
+        <mxCell id="step3" value="3. Consultar usuario" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;fontColor=#0066cc;fontStyle=1;" edge="1" parent="1" source="userService" target="database">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 4: Generate JWT -->
+        <mxCell id="step4" value="4. Generar JWT" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066cc;strokeWidth=2;fontColor=#0066cc;fontStyle=1;" edge="1" parent="1" source="authController" target="jwtHelper">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="180" />
+              <mxPoint x="490" y="180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Step 5: Return JWT -->
+        <mxCell id="step5" value="5. JWT Token Response&#xa;{token, email, name}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#009900;strokeWidth=2;fontColor=#009900;fontStyle=1;" edge="1" parent="1" source="authController" target="user">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="170" y="160" />
+              <mxPoint x="170" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Phase 2: Protected Resource Access -->
+        <mxCell id="phase2Label" value="FASE 2: ACCESO A RECURSOS PROTEGIDOS" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="320" width="280" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 6: Protected Request -->
+        <mxCell id="step6" value="6. GET /api/protected/hello&#xa;Authorization: Bearer &lt;JWT&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#cc6600;strokeWidth=2;fontColor=#cc6600;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="420" as="sourcePoint" />
+            <mxPoint x="240" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Step 7: JWT Validation -->
+        <mxCell id="step7" value="7. Validar JWT&#xa;- Extraer token&#xa;- Verificar firma&#xa;- Comprobar expiración" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#cc6600;strokeWidth=2;fontColor=#cc6600;fontStyle=1;" edge="1" parent="1" source="jwtAuthFilter" target="jwtHelper">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="430" />
+              <mxPoint x="410" y="430" />
+              <mxPoint x="410" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Step 8: Set Security Context -->
+        <mxCell id="step8" value="8. Establecer&#xa;Authentication" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#cc6600;strokeWidth=2;fontColor=#cc6600;fontStyle=1;" edge="1" parent="1" source="jwtAuthFilter" target="securityContext">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 9: Forward to Controller -->
+        <mxCell id="step9" value="9. Continuar a&#xa;Controller" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#cc6600;strokeWidth=2;fontColor=#cc6600;fontStyle=1;" edge="1" parent="1" source="jwtAuthFilter" target="protectedController">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="500" />
+              <mxPoint x="300" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Step 10: Return Protected Data -->
+        <mxCell id="step10" value="10. Respuesta con&#xa;datos protegidos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#009900;strokeWidth=2;fontColor=#009900;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="630" as="sourcePoint" />
+            <mxPoint x="110" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="170" y="630" />
+              <mxPoint x="170" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Security Filter Chain -->
+        <mxCell id="filterChainLabel" value="Spring Security Filter Chain" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="350" width="160" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Components Legend -->
+        <mxCell id="legendTitle" value="COMPONENTES" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="80" width="120" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legendController" value="Controllers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="750" y="110" width="80" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legendService" value="Services" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="750" y="150" width="80" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legendSecurity" value="Security" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="750" y="190" width="80" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legendDatabase" value="Database" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="750" y="230" width="80" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Flow Description -->
+        <mxCell id="flowDescription" value="📋 DESCRIPCIÓN DEL FLUJO:&#xa;&#xa;1️⃣ FASE LOGIN:&#xa;• Usuario envía credenciales&#xa;• Sistema valida contra BD&#xa;• Se genera JWT firmado&#xa;• Cliente recibe token&#xa;&#xa;2️⃣ FASE ACCESO:&#xa;• Cliente incluye JWT en header&#xa;• JwtAuthFilter intercepta request&#xa;• Valida token y establece contexto&#xa;• Acceso permitido a recurso protegido&#xa;&#xa;🔒 SEGURIDAD:&#xa;• JWT firmado con secret&#xa;• Validación en cada request&#xa;• Autenticación stateless&#xa;• Expiración configurable" style="text;html=1;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="750" y="280" width="200" height="380" as="geometry" />
+        </mxCell>
+        
+        <!-- JWT Token Representation -->
+        <mxCell id="jwtToken" value="🎫 JWT TOKEN&#xa;&#xa;Header:&#xa;{&quot;alg&quot;:&quot;HS256&quot;,&quot;typ&quot;:&quot;JWT&quot;}&#xa;&#xa;Payload:&#xa;{&quot;sub&quot;:&quot;user@example.com&quot;,&#xa;&quot;iat&quot;:1625097600,&#xa;&quot;exp&quot;:1625184000}&#xa;&#xa;Signature:&#xa;HMACSHA256(..." style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=9;fontFamily=monospace;" vertex="1" parent="1">
+          <mxGeometry x="400" y="680" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Security Config Note -->
+        <mxCell id="securityNote" value="⚙️ SecurityConfig&#xa;• CSRF disabled&#xa;• CORS configured&#xa;• JWT filter before auth&#xa;• Stateless sessions" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=top;whiteSpace=wrap;rounded=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="40" y="680" width="140" height="80" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

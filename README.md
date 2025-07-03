@@ -182,6 +182,59 @@ src/
             └── DemoSpringSecurityProfileApplicationTests.java
 ```
 
+## 🧪 Testing de la API
+
+Disponemos de múltiples métodos para probar la API:
+
+### 1. REST Client (Recomendado) 📄
+
+**Archivo**: `test-api.http`
+
+El método más completo y fácil de usar:
+
+```bash
+# 1. Instalar extensión "REST Client" en VS Code
+# 2. Abrir test-api.http
+# 3. Hacer clic en "Send Request" arriba de cada endpoint
+# 4. Copiar el token JWT del login para usarlo en endpoints protegidos
+```
+
+### 2. Scripts Automatizados 🤖
+
+```bash
+# Bash (Linux/Mac/WSL)
+./test-api.sh
+
+# PowerShell (Windows)
+.\test-api.ps1
+```
+
+### 3. cURL Manual 🌐
+
+```bash
+# Registrar usuario
+curl -X POST http://localhost:8080/api/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","email":"john@example.com","password":"password123"}'
+
+# Login
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"john@example.com","password":"password123"}'
+
+# Acceder a endpoint protegido (usar el token del login)
+curl -X GET http://localhost:8080/api/protected/hello \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE"
+```
+
+### 4. Herramientas Externas 🔧
+
+- **Postman**: Importar endpoints desde `test-api.http`
+- **Insomnia**: Compatible con formato REST Client
+- **Thunder Client**: Extensión de VS Code alternativa
+
+Ver [`TESTING.md`](./TESTING.md) para instrucciones detalladas.
+
 ## Notas de seguridad
 
 - El JWT secret debe ser cambiado en producción
