@@ -2,6 +2,8 @@
 
 Una aplicación Spring Boot que demuestra autenticación JWT con Spring Security y configuración dinámica por perfiles.
 
+> 🚀 **Repositorio GitHub:** https://github.com/darkmtrance/demo-spring-security-profile
+
 ## Características
 
 - ✅ Autenticación JWT con Spring Security
